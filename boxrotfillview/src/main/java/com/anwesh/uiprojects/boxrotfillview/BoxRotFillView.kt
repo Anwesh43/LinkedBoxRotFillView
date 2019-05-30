@@ -197,4 +197,26 @@ class BoxRotFillView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BoxRotFillView) {
+
+        private val animator : Animator = Animator(view)
+        private val brf : BoxRotFill = BoxRotFill(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            brf.draw(canvas, paint)
+            animator.animate {
+                brf.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            brf.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
