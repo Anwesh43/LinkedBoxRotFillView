@@ -40,7 +40,7 @@ fun Canvas.drawRotLines(i : Int, sc : Float, size : Float, paint : Paint) {
     translate(-size / 2 + size * i, size)
     drawLine(0f, 0f, 0f, -2 * size, paint)
     save()
-    rotate(90f * sc.divideScale(i, lines) * (1f - 2 * i))
+    rotate(rotDeg * sc.divideScale(i, lines) * (1f - 2 * i))
     drawLine(0f, 0f, 0f, size / lSizeFactor, paint)
     restore()
     restore()
@@ -61,22 +61,23 @@ fun Canvas.drawBRFNode(i : Int, scale : Float, paint : Paint) {
     for (j in 0..(lines - 1)) {
         drawRotLines(j, sc1, size, paint)
     }
-    drawRect(RectF(-size / 2, -size * lSizeFactor * sc2, size / 2, 0f), paint)
+    drawRect(RectF(-size / 2, -size * fillFactor * sc2, size / 2, 0f), paint)
     restore()
 }
 
 class BoxRotFillView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val renderer : Renderer = Renderer(this)
 
     override fun onDraw(canvas : Canvas) {
-
+        renderer.render(canvas, paint)
     }
 
     override fun onTouchEvent(event : MotionEvent) : Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-
+                renderer.handleTap()
             }
         }
         return true
