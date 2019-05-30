@@ -220,4 +220,13 @@ class BoxRotFillView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BoxRotFillView {
+            val view : BoxRotFillView = BoxRotFillView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
