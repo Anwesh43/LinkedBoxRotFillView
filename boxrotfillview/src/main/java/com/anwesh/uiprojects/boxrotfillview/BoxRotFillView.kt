@@ -23,7 +23,7 @@ val foreColor : Int = Color.parseColor("#283593")
 val backColor : Int = Color.parseColor("#BDBDBD")
 val rotDeg : Float = 90f
 val fillFactor : Float = 0.85f
-val lSizeFactor : Float = 3.5f
+val delay : Long = 20
 
 fun Int.inverse() : Float = 1f / this
 fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
@@ -41,7 +41,7 @@ fun Canvas.drawRotLines(i : Int, sc : Float, size : Float, paint : Paint) {
     drawLine(0f, 0f, 0f, -2 * size, paint)
     save()
     rotate(rotDeg * sc.divideScale(i, lines) * (1f - 2 * i))
-    drawLine(0f, 0f, 0f, size / lSizeFactor, paint)
+    drawLine(0f, 0f, 0f, -size / 2, paint)
     restore()
     restore()
 }
@@ -61,7 +61,10 @@ fun Canvas.drawBRFNode(i : Int, scale : Float, paint : Paint) {
     for (j in 0..(lines - 1)) {
         drawRotLines(j, sc1, size, paint)
     }
-    drawRect(RectF(-size / 2, -size * fillFactor * sc2, size / 2, 0f), paint)
+    save()
+    translate(0f, size)
+    drawRect(RectF(-size / 2, -2 * size * fillFactor * sc2, size / 2, 0f), paint)
+    restore()
     restore()
 }
 
@@ -109,7 +112,7 @@ class BoxRotFillView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(delay)
                     view.invalidate()
                 } catch(ex : Exception) {
 
