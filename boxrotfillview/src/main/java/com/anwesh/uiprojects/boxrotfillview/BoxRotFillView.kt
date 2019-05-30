@@ -64,3 +64,21 @@ fun Canvas.drawBRFNode(i : Int, scale : Float, paint : Paint) {
     drawRect(RectF(-size / 2, -size * lSizeFactor * sc2, size / 2, 0f), paint)
     restore()
 }
+
+class BoxRotFillView(ctx : Context) : View(ctx) {
+
+    private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    override fun onDraw(canvas : Canvas) {
+
+    }
+
+    override fun onTouchEvent(event : MotionEvent) : Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+        }
+        return true
+    }
+}
